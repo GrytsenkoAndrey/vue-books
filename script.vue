@@ -1,10 +1,10 @@
 new Vue({
     el: '#bookSearchApp',
     data() {
-    return {
-        searchTerm: '',
-        searchResults: [],
-    }
+        return {
+            searchTerm: '',
+            searchResults: [],
+        }
     },
     methods: {
         search() {
@@ -29,6 +29,25 @@ new Vue({
                 authors += lastAuthor
             }
             return authors
+        },
+
+        addBook(book) {
+            var favoriteBooks = [];
+            var newItem = [
+                book.volumeInfo.title,
+                book.volumeInfo.publisher,
+                book.volumeInfo.publishedDate
+            ]
+            
+            if (localStorage.favoriteBooks) {
+                var savedBooks = JSON.parse(localStorage.getItem("favoriteBooks"));
+                savedBooks.push(newItem);
+                favoriteBooks = savedBooks;
+            } else {
+                favoriteBooks.push(newItem);
+            }
+            
+            localStorage.setItem("favoriteBooks", JSON.stringify(favoriteBooks));
         }
     }
 });

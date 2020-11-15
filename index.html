@@ -28,16 +28,24 @@
                 <p v-if="book.volumeInfo.publishedDate">
                   <span>Published </span> {{ book.volumeInfo.publishedDate }}
                   <span v-if="book.volumeInfo.publisher"> by {{ book.volumeInfo.publisher }}</span>
-                </p>
-              </div>
+				</p>
+			  </div>
+			  <div class="clear"></div>
+			  <button @click="addBook(book)" class="add-favorite">Add to Favorite</button>
             </li>
           </ol>  
         </section>
         
 	  </div>
 
+	  <id id="favoriteBooks">
+
+	  </id>
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="script.vue"></script>
+<!-- <script src="local.vue"></script> -->
+
 </body>
 </html>
