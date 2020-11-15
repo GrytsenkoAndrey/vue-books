@@ -1,10 +1,14 @@
 new Vue({
     el: '#bookSearchApp',
-    data() {
-        return {
-            searchTerm: '',
-            searchResults: [],
-        }
+    data: {
+        searchTerm: '',
+        searchResults: [],
+        books: [
+            {title: '', publisher: '', published: ''},
+        ],
+        savedBooks: [
+            {title: '', publisher: '', published: ''},
+        ]
     },
     methods: {
         search() {
@@ -14,7 +18,9 @@ new Vue({
             })
             .catch(e => {
                 console.log(e)
-            })
+            });
+
+            this.books = JSON.parse(localStorage.getItem("favoriteBooks"));
         },
 
         bookAuthors(book) {
@@ -32,22 +38,31 @@ new Vue({
         },
 
         addBook(book) {
-            var favoriteBooks = [];
-            var newItem = [
-                book.volumeInfo.title,
-                book.volumeInfo.publisher,
-                book.volumeInfo.publishedDate
-            ]
             
             if (localStorage.favoriteBooks) {
-                var savedBooks = JSON.parse(localStorage.getItem("favoriteBooks"));
-                savedBooks.push(newItem);
-                favoriteBooks = savedBooks;
+                this.savedBooks = JSON.parse(localStorage.getItem("favoriteBooks"));
+                this.savedBooks.push({
+                    title: book.volumeInfo.title,
+                    publisher: book.volumeInfo.publisher,
+                    published: book.volumeInfo.publishedDate
+                });
+                this.books = this.savedBooks;
             } else {
-                favoriteBooks.push(newItem);
+                this.books.push({
+                    title: book.volumeInfo.title,
+                    publisher: book.volumeInfo.publisher,
+                    published: book.volumeInfo.publishedDate
+                });
             }
             
-            localStorage.setItem("favoriteBooks", JSON.stringify(favoriteBooks));
+            localStorage.setItem("favoriteBooks", JSON.stringify(this.books));
+        },
+
+        deleteItem: function (index) {
+            this.books.splice(index, 1);
+
+            localStorage.removeItem("favoriteBooks");
+            localStorage.setItem("favoriteBooks", JSON.stringify(this.books));
         }
     }
 });

@@ -101,3 +101,7 @@
   .search-result .item-info p {
     font-size: .8rem;
   }
+
+  ol.favorite-books {
+    background-color: #999;
+  }
