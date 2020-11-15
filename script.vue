@@ -3,9 +3,7 @@ new Vue({
     data: {
         searchTerm: '',
         searchResults: [],
-        books: [
-            {title: '', publisher: '', published: ''},
-        ],
+        books: [],
         savedBooks: [
             {title: '', publisher: '', published: ''},
         ]
